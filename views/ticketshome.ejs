@@ -1,0 +1,72 @@
+<!-- FILEPATH: e:\work\CQ\Week7\Project\views\tickets.ejs -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tickets Department</title>
+        <style>
+            .card {
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                transition: 0.3s;
+                width: 22%;
+                margin: 10px;
+                display: inline-block;
+            }
+
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
+
+            .container {
+                padding: 2px 16px;
+            }
+
+            .row::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+        </style>
+    </head>
+    <body>
+        <%- include('components/header') %>
+        <h1>Ticket Types</h1>
+        <div class="row">
+            <div class="card">
+                <img src="https://via.placeholder.com/150" alt="Finance" style="width:100%">
+                <div class="container">
+                    <h4><b>Finance</b></h4>
+                    <p>Tickets for finance-related issues.</p>
+                    <button onclick="window.location.href='/tickettype/finance'">View Ticket</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://via.placeholder.com/150" alt="Delivery" style="width:100%">
+                <div class="container">
+                    <h4><b>Delivery</b></h4>
+                    <p>Tickets for delivery-related issues.</p>
+                    <button onclick="window.location.href='/tickettype/delivery'">View Ticket</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://via.placeholder.com/150" alt="Technical" style="width:100%">
+                <div class="container">
+                    <h4><b>Technical</b></h4>
+                    <p>Tickets for technical issues.</p>
+                    <button onclick="window.location.href='/tickettype/technical'">View Ticket</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://via.placeholder.com/150" alt="Hardware" style="width:100%">
+                <div class="container">
+                    <h4><b>Hardware</b></h4>
+                    <p>Tickets for hardware-related issues.</p>
+                    <button onclick="window.location.href='/tickettype/hardware'">View Ticket</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

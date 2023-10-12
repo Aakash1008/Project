@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <% tickets.forEach(function(ticket) { %> <% if (id == ticket.id) { %>
+        <title>
+            Chat with <%= (ticket.user == username) ? 'admin' : ticket.user %>
+        </title>
+    </head>
+    <body style="background-color: #f2f2f2; font-family: Arial, sans-serif;">
+        <style>
+            /* Chat container */
+            #chat-container {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            /* Chat messages */
+            #messages {
+                flex: 1;
+                overflow-y: scroll;
+                padding: 10px;
+            }
+
+            /* Chat message */
+            .message {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 10px;
+            }
+
+            /* Chat message sender */
+            .message-sender {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            /* Chat message text */
+            .message-text {
+                margin: 0;
+            }
+
+            /* Chat input form */
+            #send-message {
+                display: flex;
+                align-items: center;
+                padding: 10px;
+            }
+
+            /* Chat input field */
+            #message-input {
+                flex: 1;
+                margin-right: 10px;
+                padding: 5px;
+                border: none;
+                border-radius: 5px;
+            }
+
+            /* Chat send button */
+            #send-button {
+                padding: 5px 10px;
+                border: none;
+                border-radius: 5px;
+                background-color: #007bff;
+                color: #fff;
+                cursor: pointer;
+            }
+
+            /* Chat send button hover */
+            #send-button:hover {
+                background-color: #0069d9;
+            }
+        </style>
+        <h1>Chat with <%= (ticket.user == username) ? 'admin' : ticket.user %></h1>
+        <h2>about ticket : # <%= ticket.id %></h2>
+        <h3>Title :<%= ticket.title %></h3>
+        <div id="messages">
+            <% messages.forEach(function(message) { %> <% if (message.ticketId == ticket.id) { %> <% if (message.sender == username) { %>
+            <div class="message">
+                <p class="message-text"><%= message.text %></p>
+                <p class="message-sender">You</p>
+            </div>
+            <% } else { %>
+            <div class="message">
+                <p class="message-text"><%= message.text %></p>
+                <p class="message-sender"><%= message.sender %></p>
+            </div>
+            <% } %> <% } %> <% }) %>
+        </div>
+        <div id="send-message">
+            <form id="chat-form">
+                <input
+                    type="text"
+                    name="message"
+                    id="message-input"
+                    placeholder="Type your message here"
+                />
+                <button type="submit" id="send-button">Send</button>
+            </form>
+        </div>
+    </body>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const ticketId = `<%=ticket.id%>`;
+      const username = `<%=username%>`;
+      // const socket = io.connect("http://localhost:3000");
+      const socket = io();
+
+      // When the WebSocket connection is established
+      socket.on("connect", () => {
+        // Send a message to the server to join the ticket's chat room
+        socket.emit("joinRoom", ticketId, username);
+      });
+
+      // When a new chat message is received
+      socket.on("chatMessage", (data) => {
+        appendMessage(data.sender, data.message);
+      });
+
+      // Handle form submission to send a chat message
+      document.getElementById("chat-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const messageInput = document.getElementById("message-input");
+        const messageText = messageInput.value.trim();
+        if (messageText !== "") {
+          // Send the chat message to the server
+          socket.emit("chatMessage", {
+            ticketId,
+            username,
+            message: messageText,
+          });
+          appendMessage("You", messageText);
+          messageInput.value = "";
+        }
+      });
+
+      // Function to append a message to the chat interface
+      function appendMessage(sender, message) {
+        const messagesList = document.getElementById("messages");
+        const messageItem = document.createElement("div");
+        messageItem.classList.add("message");
+        messageItem.innerHTML = `
+                <p class="message-sender">${sender}</p>
+                <p class="message-text">${message}</p>
+            `;
+        messagesList.appendChild(messageItem);
+      }
+    </script>
+  </body>
+</html>
+<% } %> <% }) %>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TMS</title>
+    <style>
+        body {
+            font-family: 'Rubik', sans-serif;
+            background: #141e30;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .content{
+            width: 100%;
+            padding: 15px 30px;
+            position: relative;
+            display: inline-block;
+            left: 50px;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .navbar {
+            position: fixed;
+            width: 40px;
+            height: 100%;
+            background: linear-gradient(#141e30, #243b55);
+            transition: 0.3s;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .navbar:hover {
+            width: 250px;
+        }
+
+        .navbar li {
+            padding: 15px;
+            width: 250px;
+        }
+
+        .navbar li a {
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+        }
+
+        .navbar li i {
+            margin-right: 15px;
+            font-size: 16px;
+        }
+
+        .content {
+            padding: 15px 30px;
+            position: relative;
+            display: inline-block;
+            left: 50px;
+        }
+
+        .ticket-form {
+            background: rgba(0, 0, 0, .5);
+            box-sizing: border-box;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .ticket-form h1 {
+            margin: 0 0 20px;
+            padding: 0;
+            color: #fff;
+            text-align: center;
+        }
+
+        .user-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .user-box label {
+            color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            transition: .5s;
+        }
+
+        .user-box textarea,
+        .user-box select,
+        .user-box input[type="file"] {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 20px;
+            border: none;
+            border-bottom: 1px solid #fff;
+            outline: none;
+            background: transparent;
+            background-color: #141e30;
+        }
+
+        .user-box textarea:focus ~ label,
+        .user-box textarea:valid ~ label,
+        .user-box select:focus ~ label,
+        .user-box select:valid ~ label,
+        .user-box input[type="file"]:focus ~ label,
+        .user-box input[type="file"]:valid ~ label {
+            top: -20px;
+            left: 0;
+            color: #03e9f4;
+            font-size: 12px;
+        }
+
+        .submit-button {
+            text-align: center;
+        }
+
+        .submit-button button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button button:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+<link href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" rel="stylesheet">
+<div class="navbar">
+    <ul>
+        <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="/mytickets/:username"><i class="fa fa-user"></i>  Ticket</a></li>
+        <li><a href="/logout"><i class="fas fa-user-tie fa-lg"></i> Logout</a></li>
+    </ul>
+</div>
+<div class="content">
+    <div class="ticket-form">
+        <h1>Submit a Ticket</h1>
+        <form action="/submit-ticket" method="POST" enctype="multipart/form-data">
+            <div class="user-box">
+                <textarea id="title" name="title" rows="1" cols="10" required></textarea>
+                <label for="title">Title:</label>
+            </div>
+            <div class="user-box">
+                <select id="type" name="type" required>
+                    <option value="finance">Finance</option>
+                    <option value="delivery">Delivery</option>
+                    <option value="technical">Technical</option>
+                    <option value="hardware">Hardware</option>
+                </select>
+                <label for="type">Type:</label>
+            </div>
+            <div class="user-box">
+                <textarea id="desc" name="desc" rows="5" cols="50" required></textarea>
+                <label for="desc">Description:</label>
+            </div>
+            <div class="user-box">
+                <select id="pri" name="pri" required>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <label for="pri">Priority:</label>
+            </div>
+            <div class="user-box">
+                <input type="file" id="ticimg" name="ticimg" accept="image/*">
+                <label for="ticimg">Ticket Image:</label>
+            </div>
+            <div class="submit-button">
+                <button type="submit" id="submitTicketButton">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

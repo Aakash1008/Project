@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ticket Details</title>
+  </head>
+  <body>
+    <%- include('components/header') %>
+    <h1>Ticket Details</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Image</th>
+          <th>Chat</th>
+          <th>Close Ticket</th>
+        </tr>
+      </thead>
+      <tbody>
+<% tickets.forEach(function(ticket) { %>
+  <% if(ticket.type == type) { %>
+  
+
+
+        <tr>
+          <td><%= ticket.id %></td>
+          <td><%= ticket.title %></td>
+          <td><%= ticket.desc %></td>
+          <td><%= ticket.status %></td>
+          <td>
+            <img
+              src="/tupload/<%= ticket.ticimg %>"
+              alt="Ticket Image"
+              width="100px"
+            />
+          </td>
+          <td>
+            <button onclick="window.location.href='/chat/<%= ticket.id %>'">
+              Open for Chat
+            </button>
+          </td>
+          <td>
+            <button onclick="window.location.href='/close/<%= ticket.id %>'">
+              Close Ticket
+            </button>
+          </td>
+        </tr>
+        <% } %>
+<% }); %>
+      </tbody>
+    </table>
+  </body>
+</html>
